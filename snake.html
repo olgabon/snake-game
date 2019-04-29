@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>snake game</title>
+    <link href="https://fonts.googleapis.com/css?family=Zilla+Slab" rel="stylesheet">
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <h1>Snake Game</h1>
+    <div id="scoreSection">
+      <div id="scores">
+        SCORE: <span id="score">0</span> 
+        <span id="secondScore">SCORE: <span id="score2">0</span></span>
+      </div>
+        <br>
+        LEVEL: <span id="level"></span>
+        <button id="begin">Baby</button>
+        <button id="middle">Teenager</button>
+        <button id="senior">Adult</button> <br>
+
+        <button id="twoPlayers">Two Players </button>
+        <button id="newGame" onClick="window.location.reload()">New Game</button>
+    </div>
+    <div class="list-container">
+    <div class="rules-container">
+      <h2>The rules</h2>
+      <ul>
+        <li> Don't run the snake into the wall, or his own tail: you die.</li>
+        <li> Use your cursor keys: up, left, right, and down.</li>
+        <li> For two players game use cursor keys: W, S, A, D.</li>
+        <li> Eat the <span id="red">RED</span> apples to gain points.</li>
+        <li> You will need to click "New Game" button to start a new game.</li>
+      </ul>
+    </div>
+    </div>
+<canvas id="gameCanvas" width="450" height="450"></canvas>
+    <script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
+    <script src="./snake.js"></script>
+    <script src="./main.js"></script>
+</body>
+</html>

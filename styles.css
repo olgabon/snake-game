@@ -1,0 +1,68 @@
+body {
+font-family: 'Zilla Slab', serif;
+background-color: #e6dcc6;
+display: inline;
+}
+
+#scoreSection {
+    margin: 0 8%;
+}
+#scores {
+    padding: 10px 0;
+}
+.rules-container {
+    margin-left: 8%; 
+    padding-top: 40px;
+    width: 50%;
+    line-height: 25px;
+}
+.list-container {
+    width: 60%;
+}
+button{
+    background-color: white;
+    margin: 5px;
+    height: 30px;
+    padding: 0 10px;
+    border-color: white;
+    border-style: none;
+    border-radius: 5px;
+    color: #121b17;
+    font-size: 15px;
+}
+#score {
+    font-size: 40px;
+    color: #ffa500;
+}
+#score2 {
+    font-size: 40px;
+    color: #178000;
+}
+#twoPlayers{
+    margin-left: 57px;
+}
+h1{
+    text-align: center;
+    padding-top: 20px;
+    letter-spacing: 5px;
+}
+canvas {
+    margin-right: 10%;
+    margin-left: 40%;
+    margin-top: -50%;
+}
+
+#secondScore {
+    display: hidden;
+    padding-left: 50px;
+}
+h2 {
+    text-align: center;
+}
+ul li {
+    font-size: 18px;
+    list-style: square;
+}
+#red {
+    color: red;
+}
