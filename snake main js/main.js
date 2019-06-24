@@ -1,7 +1,6 @@
 var canvas = document.getElementById('gameCanvas');
 var ctx = canvas.getContext('2d');
 document.addEventListener ("keydown", changeSecondDirection);
-document.addEventListener ("keydown", changeDirection);
 
 let snake = [
     {x: 10, y: 150},
@@ -65,79 +64,81 @@ let speed = 0;
 
 createFood()
 
-let beginButton = document.getElementById('begin')
-beginButton.addEventListener('click', main);
 
-beginButton.addEventListener('click', main)
+class Game {
+    constructor() {
+        this.changingDirection = false
+        document.getElementById('begin').addEventListener('click', ()=> {
+            this.main(200)
+        }) 
+        document.getElementById('middle').addEventListener('click', ()=> {
+            this.main(100)
+        } )
+        document.getElementById('senior').addEventListener('click', ()=> {
+            this.main(80)
+        });
+        document.addEventListener("keydown", this.changeDirection.bind(this));
+    }
 
-document.getElementById("begin")
-        .addEventListener("click", function() {
-  document.getElementById("secondScore").hidden = false;
-  document.getElementById("secondScore").hidden = true;
-}, false);
+    main(speed) {
+        document.getElementById("secondScore").hidden = false;
+        document.getElementById("secondScore").hidden = true;
+        this.start(speed)
+    }
 
-function main() {
-    if (gameEnded()) return;
-    setTimeout(function onTick() {
-    changingDirection = false;
-      clearCanvas();
-      drawSnakeFood ()
-      advanceSnake();
-      drawSnake();
-      drawAllStones ();
-      main();
-    }, 200)
+    start(speed) {
+        if (gameEnded()) return;
+        setTimeout(()=> {
+        this.changingDirection = false;
+          clearCanvas();
+          drawSnakeFood ()
+          advanceSnake();
+          drawSnake();
+          drawAllStones ();
+          this.main(speed);
+        }, speed)
+    }
+
+
+    changeDirection (event) {
+        const left_arrow = 37;
+        const right_arrow = 39;
+        const up_arrow = 38;
+        const down_arrow = 40;
+    
+        if (this.changingDirection) return;
+    
+        this.changingDirection = true;
+    
+        const keyPressed = event.keyCode;
+        const directionUp = dy === -10;
+        const directionDown = dy === 10;
+        const directionLeft = dx === -10;      
+        const directionRight = dx === 10;
+    
+        if (keyPressed === left_arrow && !directionRight) {
+            dx = -10;
+            dy = 0
+        } 
+        if (keyPressed === right_arrow && !directionLeft) {
+            dx = 10;
+            dy = 0;
+        }   
+        if (keyPressed === up_arrow && !directionDown) {
+            dx = 0;
+            dy = -10;
+        }
+        if (keyPressed === down_arrow && !directionUp) {
+            dx = 0;
+            dy = 10;
+        }
+    }
 }
 
-let levelButton = document.getElementById('middle')
-levelButton.addEventListener('click', middleLevel);
 
-levelButton.addEventListener('click', middleLevel)
-
-document.getElementById("middle")
-        .addEventListener("click", function() {
-  document.getElementById("secondScore").hidden = false;
-  document.getElementById("secondScore").hidden = true;
-}, false);
-
-
-function middleLevel() {
-    if (gameEnded()) return;
-    setTimeout(function onTick() {
-    changingDirection = false;
-      clearCanvas();
-      drawSnakeFood ()
-      advanceSnake();
-      drawSnake();
-      drawAllStones ();
-      middleLevel();
-    }, 100)
-}
-
-let seniorButton = document.getElementById('senior')
-seniorButton.addEventListener('click', levelsenior);
-
-seniorButton.addEventListener('click', seniorButton)
-
-document.getElementById("senior")
-        .addEventListener("click", function() {
-  document.getElementById("secondScore").hidden = false;
-  document.getElementById("secondScore").hidden = true;
-}, false);
-
-function levelsenior() {
-    if (gameEnded()) return;
-    setTimeout(function onTick() {
-    changingDirection = false;
-      clearCanvas();
-      drawSnakeFood ()
-      advanceSnake();
-      drawSnake();
-      drawAllStones ();
-      levelsenior()
-    }, 80)  
-}
-
+window.addEventListener("load", function() { 
+    new Game()
+})
 function clearCanvas () {
     ctx.fillStyle = 'black';
     ctx.strokeStyle = 'white';
@@ -202,40 +203,12 @@ function drawLastExtraStone () {
     ctx.strokeRect(lastExtraStone[0].x, lastExtraStone[0].y, 10, 40);
 };
 
-function changeDirection (event) {
-    event.preventDefault();
-    const left_arrow = 37;
-    const right_arrow = 39;
-    const up_arrow = 38;
-    const down_arrow = 40;
-
-    if (changingDirection) return;
-
-    changingDirection = true;
-
-    const keyPressed = event.keyCode;
-    const directionUp = dy === -10;
-    const directionDown = dy === 10;
-    const directionLeft = dx === -10;      
-    const directionRight = dx === 10;
-
-    if (keyPressed === left_arrow && !directionRight) {
-        dx = -10;
-        dy = 0
-    } 
-    if (keyPressed === right_arrow && !directionLeft) {
-        dx = 10;
-        dy = 0;
-    }   
-    if (keyPressed === up_arrow && !directionDown) {
-        dx = 0;
-        dy = -10;
-    }
-    if (keyPressed === down_arrow && !directionUp) {
-        dx = 0;
-        dy = 10;
-    }
-}
+function drawSnakeFood () {
+    ctx.fillStyle = 'red';
+    ctx.strokeStyle = 'darkred';
+    ctx.fillRect(foodX, foodY, 10, 10);
+    ctx.strokeRect(foodX, foodY, 10, 10);
+};
 
 function getRandomTen(min, max) {
     return Math.round((Math.random() * (max-min) + min) / 10) * 10;
@@ -255,12 +228,6 @@ function createFood() {
  })
 }
 
-function drawSnakeFood () {
-    ctx.fillStyle = 'red';
-    ctx.strokeStyle = 'darkred';
-    ctx.fillRect(foodX, foodY, 10, 10);
-    ctx.strokeRect(foodX, foodY, 10, 10);
- };
 
 function gameEnded() {
     for (let i=4; i<snake.length; i++) {
